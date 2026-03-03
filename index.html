@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Energi di Sekitar Kita</title>
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<script id="fullscreen-script">
+  document.getElementById("startBtn").addEventListener("click", function (e) {
+  
+    // Masuk Fullscreen
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    }
+  
+    // Coba paksa Landscape (hanya HP yang support)
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock("landscape").catch(function (err) {
+        console.log("Orientation lock tidak didukung:", err);
+      });
+    }
+  
+  });
+  </script>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header fixed-top text-center">
+    <div class="container">
+      <a href="index.html" class="logo-center">
+        <img src="assets/img/Logo.png" alt="Logo">
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero-custom">
+
+    <!-- GIF Matahari & Awan -->
+    <img src="assets/img/matahari.gif" class="sun-gif reveal delay-1" alt="Matahari">
+    <img src="assets/img/awan.gif" class="cloud-gif reveal delay-2" alt="Awan">
+
+    <div class="hero-content">
+      <h1 class="hero-title reveal delay-3">
+        Energi di <br> Sekitar Kita
+      </h1>    
+
+      <div class="hero-buttons reveal delay-4">
+        <a href="menu.html" id="startBtn" class="btn-hero reveal delay-5">Mulai</a>
+        <a href="identitas.html" class="btn-hero reveal delay-6">Identitas</a>
+      </div>
+    </div>
+
+  </section>
+
+</body>
+</html>

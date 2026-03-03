@@ -1,0 +1,167 @@
+@charset "UTF-8";
+
+/* ===============================
+   ROOT SETTINGS
+================================= */
+:root {
+  --default-font: "Fredoka", sans-serif;
+
+  --logo-size: 60px;        /* UBAH UKURAN LOGO DI SINI */
+  --sun-size: 400px;        /* UBAH UKURAN MATAHARI */
+  --cloud-size: 400px;      /* UBAH UKURAN AWAN */
+}
+
+/* ===============================
+   GLOBAL
+================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--default-font);
+}
+
+/* ===============================
+   HEADER
+================================= */
+.header {
+  padding: 10px 0;
+  background: transparent;
+}
+
+.logo-center {
+  display: inline-block;
+  background: white;
+  padding: 6px 18px;
+  border-radius: 40px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.logo-center img {
+  height: var(--logo-size);
+  width: auto;
+  display: block;
+}
+
+/* ===============================
+   HERO SECTION
+================================= */
+.hero-custom {
+  height: 100vh;
+  background: url("../img/bg.png") no-repeat center center;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+/* ===============================
+   HERO TITLE
+================================= */
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #ff6a00;
+  text-shadow: 4px 4px 0 white;
+  margin-bottom: 40px;
+}
+
+/* ===============================
+   BUTTONS
+================================= */
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+.btn-hero {
+  background: #f1f1f1;
+  padding: 18px 60px;
+  border-radius: 50px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #ff6a00;
+  text-decoration: none;
+  transition: 0.3s ease;
+  box-shadow: 0 8px 0 #d6d6d6;
+}
+
+.btn-hero:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 0 #d6d6d6;
+}
+
+.btn-hero:active {
+  transform: translateY(3px);
+  box-shadow: 0 4px 0 #d6d6d6;
+}
+
+/* ===============================
+   GIF POSITIONS
+================================= */
+.sun-gif {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: var(--sun-size);
+  z-index: 1;
+}
+
+.cloud-gif {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: var(--cloud-size);
+  z-index: 1;
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+@media (max-width: 768px) {
+
+  :root {
+    --logo-size: 50px;
+    --sun-size: 100px;
+    --cloud-size: 120px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .btn-hero {
+    font-size: 1.2rem;
+    padding: 14px 40px;
+  }
+}
+
+/* ===============================
+   REVEAL ANIMATION
+================================= */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: fadeUp 0.8s ease forwards;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+.delay-4 { animation-delay: 0.8s; }
+.delay-5 { animation-delay: 1s; }
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

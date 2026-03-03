@@ -1,0 +1,174 @@
+@charset "UTF-8";
+
+:root {
+  --font: "Fredoka", sans-serif;
+  --sun-size: 200px;
+  --cloud-size: 200px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font);
+}
+
+/* ===============================
+   HERO BACKGROUND
+================================= */
+.identitas-hero {
+  height: 100vh;
+  background: url("../img/bg.png") no-repeat center center;
+  background-size: cover;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===============================
+   TITLE
+================================= */
+.identitas-title {
+  position: absolute;
+  top: 60px;
+  font-size: 4rem;
+  color: #ff6a00;
+  text-shadow: 4px 4px 0 white;
+}
+
+/* ===============================
+   CARD
+================================= */
+.identitas-card {
+  background: repeating-linear-gradient(
+    0deg,
+    #9b6a2f,
+    #9b6a2f 40px,
+    #8a5c27 40px,
+    #8a5c27 80px
+  );
+  width: 75%;
+  max-width: 1000px;
+  border-radius: 50px;
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+.foto-wrapper {
+  background: #ff3b30;
+  padding: 20px;
+  border-radius: 30px;
+}
+
+.foto-wrapper img {
+  width: 250px;
+  border-radius: 20px;
+}
+
+.identitas-data {
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 2;
+}
+
+/* ===============================
+   GIF POSITION
+================================= */
+.sun-gif {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: var(--sun-size);
+}
+
+.cloud-gif {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: var(--cloud-size);
+}
+
+/* ===============================
+   BACK BUTTON
+================================= */
+.back-btn {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  background: #ff6a00;
+  color: white;
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 6px 0 #cc5500;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  transform: translateY(-5px);
+}
+
+/* ===============================
+   RESPONSIVE
+================================= */
+@media (max-width: 768px) {
+
+  .identitas-card {
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+  }
+
+  .identitas-data {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .identitas-title {
+    font-size: 2.5rem;
+    top: 30px;
+  }
+
+  .foto-wrapper img {
+    width: 180px;
+  }
+}
+
+/* ===============================
+   REVEAL ANIMATION
+================================= */
+
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeUp 0.8s ease forwards;
+  }
+  
+  .delay-1 { animation-delay: 0.2s; }
+  .delay-2 { animation-delay: 0.4s; }
+  .delay-3 { animation-delay: 0.6s; }
+  .delay-4 { animation-delay: 0.8s; }
+  .delay-5 { animation-delay: 1s; }
+  .delay-6 { animation-delay: 1.2s; }
+  .delay-7 { animation-delay: 1.4s; }
+  
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
