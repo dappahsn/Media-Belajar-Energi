@@ -277,7 +277,8 @@ const data = quizData[currentQuestion];
 const allOptions = document.querySelectorAll(".option");
 allOptions.forEach(b=>b.style.pointerEvents="none");
 
-nextBtn.style.display="inline-block";
+// SEMBUNYIKAN NEXT DULU
+nextBtn.style.display="none";
 
 if(index === data.correct){
 
@@ -288,6 +289,9 @@ explanation.innerHTML="<b>Jawaban Benar!</b>";
 btn.style.background="#4CAF50";
 btn.style.color="white";
 
+// NEXT LANGSUNG MUNCUL JIKA BENAR
+nextBtn.style.display="inline-block";
+
 }else{
 
 soundWrong.play();
@@ -295,8 +299,16 @@ feedbackImg.src="assets/img/salah.gif";
 btn.style.background="#f44336";
 btn.style.color="white";
 
+// TUNGGU 3 DETIK DULU
 setTimeout(()=>{
-explanation.innerHTML="<b>Jawaban yang benar:</b> " + data.options[data.correct] + "<br>" + data.explanation;
+
+explanation.innerHTML="<b>Jawaban yang benar:</b> " 
++ data.options[data.correct] + "<br>" 
++ data.explanation;
+
+// BARU TAMPILKAN NEXT SETELAH JAWABAN BENAR MUNCUL
+nextBtn.style.display="inline-block";
+
 },3000);
 
 }
