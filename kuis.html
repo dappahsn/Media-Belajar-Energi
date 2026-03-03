@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Energi</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Fredoka',sans-serif;
+  background:url("assets/img/bg.png") center/cover no-repeat;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.card{
+  width:85%;
+  max-width:1000px;
+  background:repeating-linear-gradient(
+    0deg,#9b6a2f,#9b6a2f 40px,#8a5c27 40px,#8a5c27 80px);
+  border-radius:50px;
+  padding:50px;
+  color:white;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+h1{
+  color:#ff6a00;
+  text-shadow:3px 3px 0 white,-3px -3px 0 white;
+}
+
+.question{
+  font-size:1.6rem;
+  margin:25px 0;
+}
+
+.options{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.option{
+  background:white;
+  color:black;
+  padding:15px;
+  border-radius:15px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.option:hover{
+  transform:scale(1.05);
+}
+
+.feedback{
+  margin-top:25px;
+  min-height:200px;
+}
+
+.feedback img{
+  width:200px;
+}
+
+.next-btn{
+  margin-top:20px;
+  background:#1f5f00;
+  color:white;
+  padding:10px 25px;
+  border:none;
+  border-radius:20px;
+  font-size:1.2rem;
+  cursor:pointer;
+  display:none;
+}
+
+.result{
+  display:none;
+}
+
+/* ===== ANIMASI SOAL ===== */
+
+.fade-out{
+  animation:fadeOut 0.4s forwards;
+}
+
+.fade-in{
+  animation:fadeIn 0.4s forwards;
+}
+
+@keyframes fadeOut{
+  to{
+    opacity:0;
+    transform:translateX(-40px);
+  }
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateX(40px);
+  }
+  to{
+    opacity:1;
+    transform:translateX(0);
+  }
+}
+
+/* ===== ANIMASI RESULT ===== */
+
+.result-animate{
+  animation:scaleIn 0.6s ease forwards;
+}
+
+@keyframes scaleIn{
+  from{
+    opacity:0;
+    transform:scale(0.8);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
+}
+
+.back-btn{
+  margin-top:25px;
+  background:white;
+  color:#ff6a00;
+  padding:12px 35px;
+  border:none;
+  border-radius:20px;
+  font-size:1.6rem;
+  font-weight:700;
+  cursor:pointer;
+  box-shadow:0 6px 0 #d9d9d9;
+  transition:0.2s;
+}
+
+.back-btn:active{
+  transform:translateY(4px);
+  box-shadow:0 2px 0 #d9d9d9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Kuis Energi</h1>
+
+<div id="quizArea">
+
+<div class="question" id="question"></div>
+
+<div class="options" id="options"></div>
+
+<div class="feedback">
+<img id="feedbackImg">
+<div id="explanation"></div>
+<button class="next-btn" id="nextBtn">Next →</button>
+</div>
+
+</div>
+
+<div class="result" id="resultArea">
+<h2>Selamat! 🎉</h2>
+<img src="assets/img/welldone.gif" width="250">
+<h3 id="scoreText"></h3>
+<button class="back-btn" onclick="window.location.href='menu.html'">⬅ Kembali ke Menu</button>
+</div>
+
+</div>
+
+<audio id="soundCorrect" src="assets/audio/benar.mp3"></audio>
+<audio id="soundWrong" src="assets/audio/salah.mp3"></audio>
+
+<script>
+
+const quizData = [
+
+{
+question:"Saat menyalakan kompor gas, terjadi perubahan energi ...",
+options:["A. listrik → gerak","B. kimia → panas","C. panas → bunyi","D. cahaya → listrik"],
+correct:1,
+explanation:"Gas mengandung energi kimia yang berubah menjadi panas saat dibakar."
+},
+
+{
+question:"Panel surya mengubah energi ...",
+options:["A. panas → bunyi","B. kimia → panas","C. cahaya → listrik","D. gerak → panas"],
+correct:2,
+explanation:"Panel surya mengubah cahaya menjadi listrik."
+},
+
+{
+question:"Kipas angin mengubah listrik menjadi ...",
+options:["A. panas","B. gerak","C. bunyi","D. cahaya"],
+correct:1,
+explanation:"Kipas mengubah listrik menjadi energi gerak."
+},
+
+{
+question:"Menekan bel menghasilkan perubahan energi ...",
+options:["A. panas → cahaya","B. gerak → bunyi","C. listrik → panas","D. cahaya → gerak"],
+correct:1,
+explanation:"Tekanan (gerak) menghasilkan bunyi."
+},
+
+{
+question:"Balon udara terbang karena perubahan energi ...",
+options:["A. cahaya → listrik","B. panas → gerak","C. kimia → cahaya","D. listrik → bunyi"],
+correct:1,
+explanation:"Udara panas menyebabkan balon naik."
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+let answered = false;
+
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const feedbackImg = document.getElementById("feedbackImg");
+const explanation = document.getElementById("explanation");
+const nextBtn = document.getElementById("nextBtn");
+const resultArea = document.getElementById("resultArea");
+const quizArea = document.getElementById("quizArea");
+const scoreText = document.getElementById("scoreText");
+
+const soundCorrect = document.getElementById("soundCorrect");
+const soundWrong = document.getElementById("soundWrong");
+
+function stopAllSounds(){
+soundCorrect.pause();
+soundWrong.pause();
+soundCorrect.currentTime = 0;
+soundWrong.currentTime = 0;
+}
+
+function loadQuestion(){
+
+answered = false;
+feedbackImg.src="";
+explanation.innerHTML="";
+nextBtn.style.display="none";
+
+const data = quizData[currentQuestion];
+questionEl.textContent = data.question;
+optionsEl.innerHTML="";
+
+data.options.forEach((option,index)=>{
+const btn = document.createElement("div");
+btn.classList.add("option");
+btn.textContent = option;
+btn.onclick = ()=>checkAnswer(index,btn);
+optionsEl.appendChild(btn);
+});
+}
+
+function checkAnswer(index,btn){
+
+if(answered) return;
+answered = true;
+
+const data = quizData[currentQuestion];
+const allOptions = document.querySelectorAll(".option");
+allOptions.forEach(b=>b.style.pointerEvents="none");
+
+nextBtn.style.display="inline-block";
+
+if(index === data.correct){
+
+score++;
+soundCorrect.play();
+feedbackImg.src="assets/img/benar.gif";
+explanation.innerHTML="<b>Jawaban Benar!</b>";
+btn.style.background="#4CAF50";
+btn.style.color="white";
+
+}else{
+
+soundWrong.play();
+feedbackImg.src="assets/img/salah.gif";
+btn.style.background="#f44336";
+btn.style.color="white";
+
+setTimeout(()=>{
+explanation.innerHTML="<b>Jawaban yang benar:</b> " + data.options[data.correct] + "<br>" + data.explanation;
+},3000);
+
+}
+}
+
+nextBtn.onclick = function(){
+
+stopAllSounds();
+
+quizArea.classList.add("fade-out");
+
+setTimeout(()=>{
+
+currentQuestion++;
+
+if(currentQuestion < quizData.length){
+
+quizArea.classList.remove("fade-out");
+quizArea.classList.add("fade-in");
+
+loadQuestion();
+
+setTimeout(()=>{
+quizArea.classList.remove("fade-in");
+},400);
+
+}else{
+
+showResult();
+
+}
+
+},400);
+
+}
+
+function showResult(){
+
+quizArea.style.display="none";
+resultArea.style.display="block";
+resultArea.classList.add("result-animate");
+scoreText.textContent="Skor kamu: " + score + " / " + quizData.length;
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
