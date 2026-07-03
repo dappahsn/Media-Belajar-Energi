@@ -26,7 +26,6 @@
       document.documentElement.requestFullscreen();
     }
   
-    // Coba paksa Landscape (hanya HP yang support)
     if (screen.orientation && screen.orientation.lock) {
       screen.orientation.lock("landscape").catch(function (err) {
         console.log("Orientation lock tidak didukung:", err);
